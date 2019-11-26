@@ -30,7 +30,7 @@ const Home: React.FC = () => {
       </IonHeader>
       <IonContent>
     	{accesos.map((e:iAcesos)=>
-         <IonCard className="welcome-card" href={e.href}>
+         <IonCard className="welcome-card" href={e.href} key={e.href}>
           	<IonCardHeader>
 				<IonCardTitle><IonIcon icon={e.icon} /> {e.title}</IonCardTitle>
 				<IonCardSubtitle>{e.subtitle}</IonCardSubtitle>
