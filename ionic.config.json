@@ -1,5 +1,7 @@
 {
   "name": "appPruebas",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "react"
 }

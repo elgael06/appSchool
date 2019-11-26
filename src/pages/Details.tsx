@@ -7,13 +7,15 @@ const Details: React.FC = () => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/tab2" />
+            <IonBackButton defaultHref="/apps" />
           </IonButtons>
           <IonTitle>Detail</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
         <p>Details</p>
+        <strong>this is an asignation.</strong>
+        
       </IonContent>
     </IonPage>
   );
