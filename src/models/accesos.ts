@@ -1,4 +1,4 @@
-import { list, book, pie, build, people } from "ionicons/icons";
+import { list, book, pie, build, people, search } from "ionicons/icons";
 
 export interface iAcesos{
     icon:{
@@ -36,7 +36,7 @@ const accesos = [
         href:'/Informes'
     },
     {
-        icon:build,
+        icon:search,
         title:'Examinador',
         subtitle:'',
         href:'/Examinador'
