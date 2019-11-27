@@ -36,7 +36,7 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import Asistencia from './pages/asistencia/';
 import Error from './pages/Error';
-import Materias from './pages/Actions/Materias';
+import Materias from './pages/Actions/Materias/';
 
 const App: React.FC = () => (
   <IonApp>
