@@ -10,7 +10,8 @@ import {
     IonButton,
     IonIcon,
     IonCard,
-    IonCardContent
+    IonCardContent,
+    IonToast
   } from '@ionic/react';
 import React,{FC} from 'react';
 import { addCircle } from 'ionicons/icons';
@@ -19,6 +20,7 @@ import { insert, select } from '../../manager/sql.services';
 
 const Materias : FC = () =>{
     const [materia, setMateria] = useState('');
+    const [showToast,setShowToast] = useState(false);
 
     const insertMateriaMaestro = (idMateria:number)=>{
         insert.MateriasProfesor(1,idMateria)
@@ -28,6 +30,10 @@ const Materias : FC = () =>{
     insert.Materia(materia)
     select.from.materiaTop(insertMateriaMaestro)
     setMateria('');
+    setShowToast(true);
+    setTimeout(()=>{
+      setShowToast(false)
+    },5000)
     }
 
     const changed = (e:any) => {
@@ -61,6 +67,12 @@ const Materias : FC = () =>{
                 </IonCardContent>
             </IonCard>
         </IonContent>
+        <IonToast 
+			isOpen={showToast}
+			onDidDismiss={() => setShowToast(false)}
+			message="Materia Agregada Satisfactoriamente."
+			duration={3000}
+			/>
       </IonPage>);
 }
 
