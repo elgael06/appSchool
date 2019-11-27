@@ -13,7 +13,7 @@ const Actions: React.FC = () => {
       <IonContent >
       <IonCard className="welcome-card" href="/actions/materia">
           	<IonCardHeader>
-				<IonCardTitle><IonIcon icon={addCircle} /> Agregar Materia</IonCardTitle>
+				<IonCardTitle><IonIcon icon={addCircle} /> Materias</IonCardTitle>
           	</IonCardHeader>
         </IonCard>
       </IonContent>
