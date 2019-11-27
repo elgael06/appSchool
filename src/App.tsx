@@ -13,7 +13,7 @@ import { IonReactRouter } from '@ionic/react-router';
 import { home, power, cog } from 'ionicons/icons';
 import Home from './pages/Home';
 import Apps from './pages/Apps';
-import Actions from './pages/Actions';
+import Actions from './pages/Actions/Actions';
 import Details from './pages/Details';
 
 /* Core CSS required for Ionic components to work properly */
@@ -36,16 +36,19 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import Asistencia from './pages/asistencia/';
 import Error from './pages/Error';
+import Materias from './pages/Actions/Materias';
 
 const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
       <IonTabs>
         <IonRouterOutlet>
-          <Route path="/home" component={Home} exact={true} />
-          <Route path="/apps" component={Apps} exact={true} />
+          <Route path="/home" component={Home} exact />
+          <Route path="/actions" component={Actions} exact />
+          <Route path="/actions/materia" component={Materias} exact />
+
+          <Route path="/apps" component={Apps} exact />
           <Route path="/apps/details" component={Details} />
-          <Route path="/actions" component={Actions} />
 
           <Route path="/asistencia" component={Asistencia} />
           <Route path="/asistencia/:id" component={Asistencia} />

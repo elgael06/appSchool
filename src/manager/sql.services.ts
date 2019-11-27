@@ -82,8 +82,8 @@ export const insert = ({
  */
 export const select = ({
     all:{
-        materias(idProfesor:Number,getvalue?:any){
-            var resultado:Object[]=[];
+        materias(idProfesor:Number,getValues?:(item:Object[])=>void){
+            let resultado:Object[]=[];
 
             db.readTransaction(function (tx:SQLTransaction) {
                 tx.executeSql("SELECT idMateria,materias.name as name FROM materias_profesor LEFT JOIN materias ON materias_profesor.idMateria = materias.id where idProfesor=?;",
@@ -97,7 +97,7 @@ export const select = ({
                             });
                         }
                     }
-                    !getvalue || getvalue(resultado)
+                    !getValues || getValues(resultado)
                 });                
             });
         },
@@ -111,6 +111,16 @@ export const select = ({
 
         }
 
+    },
+    from:{
+        materiaTop(getTop:(id:number)=>void){
+            db.readTransaction(function (tx:SQLTransaction) {
+                tx.executeSql("SELECT * FROM materias;", [],function(tx:SQLTransaction, results){
+                    console.log(results.rows.length)
+                    getTop(results.rows.length)        
+                });                
+            });
+        }
     }
 });
 /**
