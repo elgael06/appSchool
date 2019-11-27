@@ -1,21 +1,8 @@
+
 //modules
 
 //globals 
 let db:Database;
-
-/**
- * DATABASE
- */
-const DATABASE =({
-    Open(){
-        db =  window.openDatabase("schoolApp.db", '1.0', "Database schoolApp", 2 * 1024 * 1024);
-    }
-});
-
-/**
- * ABRIR BD.
- */
-DATABASE.Open();
 /**
  * CREATE TABLES.
  */
@@ -50,10 +37,11 @@ export const create = ({
     MateriasProfesor(){
         db.transaction(function (tx:any) {
             tx.executeSql(
-            "CREATE TABLE IF NOT EXISTS materias_profesore (id integer primary key, idMateria integer, idProfesor integer )");
+            "CREATE TABLE IF NOT EXISTS materias_profesor (id integer primary key, idMateria integer, idProfesor integer )");
         });
     }
 });
+
 /**
  * INSERT TO TABLE.
  */
@@ -85,7 +73,7 @@ export const insert = ({
     },
     MateriasProfesor(idProfesor:Number,idMateria:Number){
         db.transaction(function (tx:any) {
-            tx.executeSql("INSERT INTO materias_profesore (idProfesor,idMateria) VALUES (?,?)", [idProfesor,idMateria]);
+            tx.executeSql("INSERT INTO materias_profesor (idProfesor,idMateria) VALUES (?,?)", [idProfesor,idMateria]);
         });
     }
 });
@@ -94,21 +82,24 @@ export const insert = ({
  */
 export const select = ({
     all:{
-        materias:(idProfesor:Number):Array<any>=>{
-            let resultado:Array<any>=[];
+        materias(idProfesor:Number,getvalue?:any){
+            var resultado:Object[]=[];
 
-            db.transaction(function (tx) {
-                tx.executeSql("SELECT id,idMateria,mat.name as name FROM materias_profesore WHERE idProfesor=? inner join materias on mat.id=idMateria ",
-                 [idProfesor], function(tx:any, results) {
+            db.readTransaction(function (tx:SQLTransaction) {
+                tx.executeSql("SELECT idMateria,materias.name as name FROM materias_profesor LEFT JOIN materias ON materias_profesor.idMateria = materias.id where idProfesor=?;",
+                 [idProfesor],function(tx:SQLTransaction, results){
+                    
                     if(results.rows.length > 0) {
                         for(var i = 0; i < results.rows.length; i++) {
-                            console.log("Result -> " + results.rows.item(i));
-                            resultado.push(results.rows.item(i));
+                            resultado.push({
+                                idMateria:results.rows.item(i).idMateria,
+                                name:results.rows.item(i).name
+                            });
                         }
                     }
-                });
+                    !getvalue || getvalue(resultado)
+                });                
             });
-            return resultado;
         },
         grupos(idProfesor:Number,idMateria:Number){
 
@@ -134,3 +125,22 @@ export const update=({
 export const deleteFrom = ({
 
 });
+/**
+ * DATABASE
+ */
+const DATABASE =({
+    Open(){
+        db =  window.openDatabase("schoolApp.db", '1.0', "Database schoolApp", 2 * 1024 * 1024);
+        create.Materias();
+        create.Grupos();
+        create.GruposMateria();
+        create.Alumnos();
+        create.Profesores();
+        create.MateriasProfesor();
+    }
+});
+
+/**
+ * ABRIR BD.
+ */
+DATABASE.Open();
