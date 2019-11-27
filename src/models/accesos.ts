@@ -1,4 +1,4 @@
-import { list, book, pie, build, people, search } from "ionicons/icons";
+import { list, book, pie, people, search } from "ionicons/icons";
 
 export interface iAcesos{
     icon:{
