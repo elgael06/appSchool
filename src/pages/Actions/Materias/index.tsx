@@ -88,7 +88,7 @@ const Materias : FC = () =>{
 				<IonInput 
 					placeholder="Buscar ..." 
 					value={filtro} 
-					autocomplete="on" 
+					autocomplete="off" 
 					onIonChange={(e:any)=>setFiltro(e.target.value.toUpperCase())} 
 					
 				/>
