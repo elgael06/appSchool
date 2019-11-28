@@ -115,9 +115,9 @@ export const select = ({
     from:{
         materiaTop(getTop:(id:number)=>void){
             db.readTransaction(function (tx:SQLTransaction) {
-                tx.executeSql("SELECT * FROM materias;", [],function(tx:SQLTransaction, results){
+                tx.executeSql("SELECT * FROM materias order by id desc LIMIT 0,1;", [],function(tx:SQLTransaction, results){
                     console.log(results.rows.length)
-                    getTop(results.rows.length)        
+                    getTop(results.rows.item(0).id)        
                 });                
             });
         }
@@ -133,13 +133,27 @@ export const update=({
  * DELETE date from TABLE.
  */
 export const deleteFrom = ({
-
+    from:{
+        materias(id:number){
+            db.transaction(function (tx:SQLTransaction) {
+                tx.executeSql("DELETE FROM materias WHERE id=?;", [id],function(tx:SQLTransaction, results){     
+                    console.log('Eliminado')
+                });               
+            });
+        },
+        materiaProfesor(id:number,idProfesor:number){
+            db.transaction(function (tx:SQLTransaction) {
+                tx.executeSql("DELETE FROM materias_profesor WHERE idMateria=? and idProfesor=?;", [id,idProfesor]);                
+            }); 
+        }
+    }
 });
 /**
  * DATABASE
  */
 const DATABASE =({
     Open(){
+        console.log("Abrir conexion...")
         db =  window.openDatabase("schoolApp.db", '1.0', "Database schoolApp", 2 * 1024 * 1024);
         create.Materias();
         create.Grupos();

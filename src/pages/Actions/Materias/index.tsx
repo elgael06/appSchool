@@ -16,24 +16,27 @@ import {
 	IonInput,
 	IonItemGroup,
 	IonItem,
-	IonActionSheet
+	IonActionSheet,
+	IonAlert
   } from '@ionic/react';
 import React,{FC, useEffect} from 'react';
 import { add, bookmarks } from 'ionicons/icons';
 import { useState } from 'react';
-import { insert, select } from '../../../manager/sql.services';
+import { insert, select, deleteFrom } from '../../../manager/sql.services';
 import ModalAgregarMateria from './ModalAgregarMateria';
 
 
 const ite:Object[]=[];
 
-
 const Materias : FC = () =>{
 	const [openModal,setOpenModal] = useState(false);
 	const [showToast,setShowToast] = useState(false);
+	const [mensajeToast,setMensaje] = useState('');
 	const [showActionSheet, setShowActionSheet] = useState(false);
+	const [alerta,setAleta] = useState(false);
 	const [materias,setMaterias] = useState(ite);
 	const [filtro,setFiltro] = useState('');
+	const [materia,setMateria] = useState(0);
 
 	useEffect(()=>{
 		select.all.materias(1,function(items:any[]){
@@ -50,14 +53,20 @@ const Materias : FC = () =>{
 	
     const evSubmit  = (materia:string) => {
 		console.log(materia)
-		insert.Materia(materia)
-		select.from.materiaTop(insertMateriaMaestro)
+		if(materias.findIndex((e:any)=>e.name===materia)===-1){
+			insert.Materia(materia)
+			select.from.materiaTop(insertMateriaMaestro)
+			setMensaje("Materia Agregada Satisfactoriamente.");
+		}else{
+			setMensaje(`La materia ${materia} ya existe !!!`)
+		}
 		setShowToast(true);
 		setOpenModal(false)
 	}
 	
-	const evOpcionMateria =(materia:number) =>{
+	const evOpcionMateria =(index:number) =>{
 		setShowActionSheet(true)
+		setMateria(index)
 	}
 
     return ( <IonPage>
@@ -68,16 +77,16 @@ const Materias : FC = () =>{
 					<IonBackButton defaultHref="/actions" />
 				</IonButtons>
             	<IonTitle style={{float:'left',marginTop:10}}>
-				Materias. 
+				Materias
 				</IonTitle>
           </IonToolbar>
         </IonHeader>
 
 		<IonContent>
 			{/** Filtro de lista Materias **/}
-			<IonItem  slot="fixed" style={{heigth:300,marginTop:10, background:"#FFFFFF"}}>
+			<IonItem  slot="fixed" style={{heigth:300,marginTop:1, background:"#FFFFFF"}}>
 				<IonInput 
-					placeholder="Filtrar..." 
+					placeholder="Buscar ..." 
 					value={filtro} 
 					autocomplete="on" 
 					onIonChange={(e:any)=>setFiltro(e.target.value.toUpperCase())} 
@@ -86,7 +95,6 @@ const Materias : FC = () =>{
 			</IonItem>
 			
 			<IonItemGroup style={{marginTop:70}}>
-
 			{
 				/**
 				 * Lista de materias
@@ -99,6 +107,7 @@ const Materias : FC = () =>{
 					</IonCardHeader>
 				</IonCard>)
 			}
+			</IonItemGroup>
 
 			<ModalAgregarMateria 
 				openModal={openModal}
@@ -108,8 +117,10 @@ const Materias : FC = () =>{
 			
 			<IonToast 
 				isOpen={showToast}
+				animated
+				position="bottom"
 				onDidDismiss={() => setShowToast(false)}
-				message="Materia Agregada Satisfactoriamente."
+				message={mensajeToast}
 				duration={3000}
 			/>
 
@@ -119,23 +130,48 @@ const Materias : FC = () =>{
 				</IonFabButton>
 			</IonFab>
 
+			<IonAlert 
+				isOpen={alerta}
+				onDidDismiss={()=>{setAleta(false); setMateria(0);}}
+				header="Eliminar !!!"
+				message={`<strong>¿ Desea Eliminar La Materia ?</strong>`}
+				buttons={[
+					{
+						text: 'Cancelar',
+						role: 'cancel',
+						cssClass: 'secondary',
+						handler: () => {
+							console.log('Confirm Cancel: blah');
+							setMateria(0);
+						}
+						},
+						{
+						text: 'Aceptar',
+						handler: () => {
+							console.log('Confirm Okay',materia);
+							deleteFrom.from.materias(materia)
+							deleteFrom.from.materiaProfesor(materia,1)
+							setTimeout(() => {
+							select.all.materias(1,function(items:any[]){
+								setMaterias(items)
+							});
+							}, 300);
+						}
+					}
+				]}
+			/>
+
 			<IonActionSheet 
 				isOpen={showActionSheet}
 				onDidDismiss={() => setShowActionSheet(false)}
 				buttons={[
 					{
-						text: 'Editar',
-						icon: 'edit',
-						handler: () => {
-						console.log('Edit clicked');
-						}
-					},
-					{
 						text: 'Eliminar',
 						role: 'destructive',
 						icon: 'trash',
 						handler: () => {
-						console.log('Delete clicked');
+						console.log('Delete clicked=>',materia);
+						setAleta(true)
 						}
 					},
 					{
@@ -143,13 +179,12 @@ const Materias : FC = () =>{
 						icon: 'close',
 						role: 'cancel',
 						handler: () => {
-						  console.log('Cancel clicked');
+						  console.log('Cancel clicked=>',materia);
+						  setMateria(0);
 						}
 					  }
 				]}
 			/>
-		
-		</IonItemGroup>
 		
 		</IonContent>
 

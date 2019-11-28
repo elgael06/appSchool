@@ -23,7 +23,7 @@ const Home: React.FC = () => {
       <IonHeader>
         <IonToolbar>
           <IonTitle>
-			Bienvenido. 
+			Bienvenido
 			<IonIcon icon={contact} style={{float:'right'}} />
 		  </IonTitle>
         </IonToolbar>
