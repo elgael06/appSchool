@@ -1,28 +1,29 @@
 
-# Instalacion dependencias.
+# AppScholl
+### Instalacion dependencias.
 
 - sudo npm i
 
-# Arrancar el proyecto.
+### Arrancar el proyecto.
 
 - sudo ionic serve
 
-# Compilar el proyecto.
+### Compilar el proyecto.
 
 - sudo ionic build
 
 -sudo npm run build
 
-# Crear compilado Android.
+### Crear compilado Android.
 
 - sudo ionic capacitor add android
 
-# Copiar el build web a android
+### Copiar el build web a android
 
 - sudo ionic capacitor copy android
 
-# Actualizar compilado.
+### Actualizar compilado.
 
 - sudo ionic capacitor update android
 
-*** Para correr el Proyecto abrir con andriod studio y ejecutar. ***
+**Para correr el Proyecto abrir con andriod studio y ejecutar.**
