@@ -5,6 +5,7 @@
   "dependencies": {
     "@capacitor/android": "^1.3.0",
     "@capacitor/core": "1.3.0",
+    "@capacitor/ios": "^1.3.0",
     "@ionic-native/sqlite": "^5.17.0",
     "@ionic-native/sqlite-porter": "^5.17.0",
     "@ionic/react": "^4.11.0",
