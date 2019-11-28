@@ -56,7 +56,7 @@ const Materias : FC = () =>{
 		if(materias.findIndex((e:any)=>e.name===materia)===-1){
 			insert.Materia(materia)
 			select.from.materiaTop(insertMateriaMaestro)
-			setMensaje("Materia Agregada Satisfactoriamente.");
+			setMensaje("Materia agregada satisfactoriamente.");
 		}else{
 			setMensaje(`La materia ${materia} ya existe !!!`)
 		}
@@ -99,7 +99,7 @@ const Materias : FC = () =>{
 				/**
 				 * Lista de materias
 				 */
-				materias.length===0 ? <span>No Cuenta con Materias asignadas...</span> : 
+				materias.length===0 ? <span>Aun no cuenta con materias asignadas...</span> : 
 					materias.filter((e:any)=>e.name.toUpperCase().search(filtro)>-1)
 					.map((e:any)=><IonCard className="welcome-card" key={e.idMateria} onClick={()=>evOpcionMateria(e.idMateria)}>
 					<IonCardHeader>
@@ -133,11 +133,11 @@ const Materias : FC = () =>{
 			<IonAlert 
 				isOpen={alerta}
 				onDidDismiss={()=>{setAleta(false); setMateria(0);}}
-				header="Eliminar !!!"
-				message={`<strong>¿ Desea Eliminar La Materia ?</strong>`}
+				header="Advertencia"
+				message={`<strong>¿Desea eliminar la materia?</strong>`}
 				buttons={[
 					{
-						text: 'Cancelar',
+						text: 'No',
 						role: 'cancel',
 						cssClass: 'secondary',
 						handler: () => {
@@ -146,7 +146,7 @@ const Materias : FC = () =>{
 						}
 						},
 						{
-						text: 'Aceptar',
+						text: 'Si',
 						handler: () => {
 							console.log('Confirm Okay',materia);
 							deleteFrom.from.materias(materia)
@@ -175,7 +175,7 @@ const Materias : FC = () =>{
 						}
 					},
 					{
-						text: 'Cancel',
+						text: 'Cancelar',
 						icon: 'close',
 						role: 'cancel',
 						handler: () => {

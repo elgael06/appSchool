@@ -34,7 +34,7 @@ const ModalAgregarMateria = (props:iModal) => {
                     <IonIcon  icon={arrowBack} />
                 </IonButtons>
                 <IonTitle style={{marginTop:10}}>
-                    Agregar.
+                    Agregar
                 </IonTitle>
             </IonToolbar>
         </IonHeader>
@@ -42,7 +42,7 @@ const ModalAgregarMateria = (props:iModal) => {
         <IonContent >
             <form onSubmit={evSubmit}>
                 <IonItem style={{marginTop:40}}>
-                    <IonLabel position="stacked">Nombre Materia</IonLabel>
+                    <IonLabel position="stacked">Nombre materia</IonLabel>
                     <IonInput 
                         placeholder="Escriba el nombre de la materia." 
                         autocomplete={'off'} 
