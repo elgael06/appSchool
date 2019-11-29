@@ -2,7 +2,7 @@ import { TYPES } from "../constants";
 
 
 export interface iPropsUsuario{
-    id:string,
+    id:number,
     nombre:string
 }
 export interface iActionsUsuario{
@@ -24,7 +24,7 @@ const Usuario:any = (state:iPropsUsuario,actions:iActionsUsuario) =>{
         default:
             return {   
                     id:1,
-                    nombre:"gael"
+                    nombre:""
                 }
     }
 }

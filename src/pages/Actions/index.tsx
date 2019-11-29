@@ -1,8 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { IonHeader, IonToolbar, IonPage, IonTitle, IonContent, IonCard, IonCardHeader, IonCardTitle, IonIcon } from '@ionic/react';
 import { addCircle } from 'ionicons/icons';
+import { iPropsUsuario } from '../../reducers/usuario';
 
-const Actions: React.FC = () => {
+interface iPropsActions{
+  usuario:iPropsUsuario
+} 
+
+const Actions = ({usuario}:iPropsActions) => {
+  useEffect(()=>{
+		const URL = window.location.pathname.split('/');
+		console.log(URL[1])
+		if(URL[1]!=='apps')
+			{(usuario.id>0)  || (function(){window.location.href = "apps"}())}
+	});
   return (
     <IonPage>
       <IonHeader>
@@ -11,7 +22,7 @@ const Actions: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent >
-      <IonCard className="welcome-card" href="/actions/materia">
+      <IonCard className="welcome-card" routerLink="/actions/materia">
           	<IonCardHeader>
 				<IonCardTitle><IonIcon icon={addCircle} /> Materias</IonCardTitle>
           	</IonCardHeader>

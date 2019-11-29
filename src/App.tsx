@@ -36,47 +36,47 @@ import Materias from './pages/Actions/Materias/';
 
 
 import Apps from './pages/Apps';
-import Actions from './pages/Actions/Actions';
 import Details from './pages/Details';
 
 import Home from './containers/Home';
+import Actions from './containers/Actions';
 
-const App = () => (
-  <IonApp>
+const App = () =>{
+  
+  return(<IonApp>
+		<IonReactRouter>
+		<IonTabs>
+			<IonRouterOutlet>
+			<Route path="/home" component={Home} exact />
+			<Route path="/actions" component={Actions} exact />
+			<Route path="/actions/materia" component={Materias} exact />
 
-    <IonReactRouter>
-      <IonTabs>
-        <IonRouterOutlet>
-          <Route path="/home" component={Home} exact />
-          <Route path="/actions" component={Actions} exact />
-          <Route path="/actions/materia" component={Materias} exact />
+			<Route path="/apps" component={Apps} exact />
+			<Route path="/apps/details" component={Details} />
 
-          <Route path="/apps" component={Apps} exact />
-          <Route path="/apps/details" component={Details} />
+			<Route path="/asistencia" component={Asistencia} />
+			<Route path="/asistencia/:id" component={Asistencia} />
 
-          <Route path="/asistencia" component={Asistencia} />
-          <Route path="/asistencia/:id" component={Asistencia} />
-
-          <Route path="/" render={() => <Redirect to="/home" />} exact={true} />
-          <Route path="/*" component={Error} />
-        </IonRouterOutlet>
-        <IonTabBar slot="bottom">
-          <IonTabButton tab="home" href="/home">
-            <IonIcon icon={home} />
-            <IonLabel>Inicio</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="actions" href="/actions">
-            <IonIcon icon={cog} />
-            <IonLabel>Acciones</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="apps" href="/apps">
-            <IonIcon icon={power} />
-            <IonLabel>Salir</IonLabel>
-          </IonTabButton>
-        </IonTabBar>
-      </IonTabs>
-    </IonReactRouter>
-  </IonApp>
-);
-
+			<Route path="/" render={() => <Redirect to="/home" />} exact={true} />
+			<Route path="/*" component={Error} />
+			</IonRouterOutlet>
+			<IonTabBar slot="bottom">
+			<IonTabButton tab="home" href="/home">
+				<IonIcon icon={home} />
+				<IonLabel>Inicio</IonLabel>
+			</IonTabButton>
+			<IonTabButton tab="actions" href="/actions">
+				<IonIcon icon={cog} />
+				<IonLabel>Acciones</IonLabel>
+			</IonTabButton>
+			<IonTabButton tab="apps" href="/apps">
+				<IonIcon icon={power} />
+				<IonLabel>Salir</IonLabel>
+			</IonTabButton>
+			</IonTabBar>
+		</IonTabs>
+		</IonReactRouter>
+	</IonApp>
+	);
+  }
 export default App;

@@ -12,7 +12,7 @@ import {
 } from '@ionic/react';
 import { contact } from 'ionicons/icons';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import './Tab1.css';
 import accesos, { iAcesos } from '../models/accesos';
 import { iPropsUsuario } from '../reducers/usuario';
@@ -22,16 +22,19 @@ interface iPropsHome{
 } 
 
 const Home = ({usuario}:iPropsHome) => {
-
-
-  console.log('Usuario: ',usuario.nombre)
+	useEffect(()=>{
+		const URL = window.location.pathname.split('/');
+		console.log(URL[1])
+		if(URL[1]!=='apps')
+			{(usuario.id>0)  || (function(){window.location.href = "apps"}())}
+	});
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
           <IonTitle>
 			Bienvenido
-    <u style={{padding:5}}>{usuario.nombre}</u>
+    		<u style={{padding:5}}>{usuario.nombre}</u>
 			<IonIcon icon={contact} style={{float:'right'}} />
 		  </IonTitle>
         </IonToolbar>

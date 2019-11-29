@@ -1,8 +1,9 @@
 import { connect } from 'react-redux'
-import App from '../App';
+import Actions from '../pages/Actions';
 
 
 const mapStateToProps = (state:any) =>({
+    usuario:state.Usuario
 });
 
 const mapDispatchToProps = (dispatch:any) =>({
@@ -10,5 +11,4 @@ const mapDispatchToProps = (dispatch:any) =>({
 
 export default connect(
     mapStateToProps,
-  mapDispatchToProps)(App);
-
+  mapDispatchToProps)(Actions);
