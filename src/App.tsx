@@ -11,10 +11,6 @@ import {
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { home, power, cog } from 'ionicons/icons';
-import Home from './pages/Home';
-import Apps from './pages/Apps';
-import Actions from './pages/Actions/Actions';
-import Details from './pages/Details';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -38,8 +34,16 @@ import Asistencia from './pages/asistencia/';
 import Error from './pages/Error';
 import Materias from './pages/Actions/Materias/';
 
-const App: React.FC = () => (
+
+import Apps from './pages/Apps';
+import Actions from './pages/Actions/Actions';
+import Details from './pages/Details';
+
+import Home from './containers/Home';
+
+const App = () => (
   <IonApp>
+
     <IonReactRouter>
       <IonTabs>
         <IonRouterOutlet>

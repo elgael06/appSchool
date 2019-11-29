@@ -15,15 +15,23 @@ import { contact } from 'ionicons/icons';
 import React from 'react';
 import './Tab1.css';
 import accesos, { iAcesos } from '../models/accesos';
+import { iPropsUsuario } from '../reducers/usuario';
 
-const Home: React.FC = () => {
+interface iPropsHome{
+  usuario:iPropsUsuario
+} 
 
+const Home = ({usuario}:iPropsHome) => {
+
+
+  console.log('Usuario: ',usuario.nombre)
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
           <IonTitle>
 			Bienvenido
+    <u style={{padding:5}}>{usuario.nombre}</u>
 			<IonIcon icon={contact} style={{float:'right'}} />
 		  </IonTitle>
         </IonToolbar>

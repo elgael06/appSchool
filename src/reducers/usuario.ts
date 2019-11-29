@@ -22,7 +22,10 @@ const Usuario:any = (state:iPropsUsuario,actions:iActionsUsuario) =>{
         case TYPES.GET_USUARIO:
             return state;
         default:
-            return {id:0,nombre:''};
+            return {   
+                    id:1,
+                    nombre:"gael"
+                }
     }
 }
 
