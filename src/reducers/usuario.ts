@@ -23,7 +23,7 @@ const Usuario:any = (state:iPropsUsuario,actions:iActionsUsuario) =>{
             return state;
         default:
             return {   
-                    id:1,
+                    id:0,
                     nombre:""
                 }
     }
