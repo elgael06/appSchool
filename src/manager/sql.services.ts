@@ -7,6 +7,30 @@ let db:Database;
  * CREATE TABLES.
  */
 export const create = ({
+    Status(){
+        db.transaction(function (tx:any) {
+            tx.executeSql(
+            "CREATE TABLE IF NOT EXISTS status (id INTEGER PRIMARY KEY AutoIncrement NOT NULL, descripcion VARCHAR(45) NOT NULL, status BIT NOT NULL DEFAULT 1, fechaCreacion DATETIME NOT NULL, fechaUltimaActualizacion DATETIME NOT NULL)");
+        });
+    },
+    TipoTurnos(){
+        db.transaction(function (tx:any) {
+            tx.executeSql(
+            "CREATE TABLE IF NOT EXISTS tipoTurnos (id INTEGER PRIMARY KEY AutoIncrement NOT NULL, descripcion VARCHAR(45) NOT NULL, idStatus INT NOT NULL DEFAULT 1, fechaCreacion DATETIME NOT NULL, fechaUltimaActualizacion DATETIME NOT NULL)");
+        });
+    },
+    Profesores(){
+        db.transaction(function (tx:any) {
+            tx.executeSql(
+            "CREATE TABLE IF NOT EXISTS profesores (id INTEGER PRIMARY KEY AutoIncrement NOT NULL, clave VARCHAR(100) NOT NULL, usuario VARCHAR(30) NOT NULL DEFAULT 'default', password VARCHAR(200) NOT NULL, nombre VARCHAR(50) NOT NULL, apellidoPaterno VARCHAR(30) NOT NULL, apellidoMaterno VARCHAR(30) NULL, email VARCHAR(45) NOT NULL, mesesPrueba INT NOT NULL DEFAULT 1, terminoPrueba BIT NOT NULL DEFAULT 0, idTipoTurno INT NOT NULL DEFAULT 1, idStatus INT NOT NULL DEFAULT 1, fechaCreacion DATETIME NOT NULL, fechaUltimaActualizacion DATETIME NOT NULL)");
+        });
+    },
+    BitacoraIngresosAPP(){
+        db.transaction(function (tx:any) {
+            tx.executeSql(
+            "CREATE TABLE IF NOT EXISTS status (id INTEGER PRIMARY KEY AutoIncrement NOT NULL, descripcion VARCHAR(45) NOT NULL, status BIT NOT NULL DEFAULT 1, fechaCreacion DATETIME NOT NULL, fechaUltimaActualizacion DATETIME NOT NULL)");
+        });
+    },
     Materias(){
         db.transaction(function (tx:any) {
             tx.executeSql("CREATE TABLE IF NOT EXISTS materias (id integer primary key, name text)");
@@ -26,12 +50,6 @@ export const create = ({
         db.transaction(function (tx:any) {
             tx.executeSql(
             "CREATE TABLE IF NOT EXISTS alumnos (id integer primary key, name text, lastName text, appPat text, appMat text, idGrupo integer )");
-        });
-    },
-    Profesores(){
-        db.transaction(function (tx:any) {
-            tx.executeSql(
-            "CREATE TABLE IF NOT EXISTS profesores (id integer primary key, name text, lastName text, appPat text, appMat text, Clave text )");
         });
     },
     MateriasProfesor(){
