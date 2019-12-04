@@ -26,7 +26,7 @@ const Home = ({usuario}:iPropsHome) => {
 		const URL = window.location.pathname.split('/');
 		console.log(URL[1])
 		if(URL[1]!=='apps')
-			{(usuario.id>0)  || (function(){window.location.href = "apps"}())}
+			{(usuario.id>0)  || (function(){window.location.href = "login"}())}
 	});
   return (
     <IonPage>
