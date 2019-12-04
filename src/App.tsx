@@ -7,7 +7,8 @@ import {
   IonRouterOutlet,
   IonTabBar,
   IonTabButton,
-  IonTabs
+  IonTabs,
+  IonLoading
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { home, power, cog } from 'ionicons/icons';
@@ -39,9 +40,14 @@ import Details from './pages/Details';
 
 import Home from './containers/Home';
 import Actions from './containers/Actions';
-import Apps from './containers/Login'
+import Apps from './containers/Login';
 
-const App = () =>{
+interface iPropsApp{
+	showLoading:boolean,
+	setShowLoading:(e:boolean)=>any
+}
+
+const App = ({showLoading, setShowLoading}:iPropsApp) =>{
 
 	const evClose=()=>{
 		console.log("salir...");
@@ -49,6 +55,7 @@ const App = () =>{
 	}
   
   return(<IonApp>
+
 		<IonReactRouter>
 		<IonTabs>
 			<IonRouterOutlet>
@@ -88,6 +95,14 @@ const App = () =>{
 
 		</IonTabs>
 		</IonReactRouter>
+
+		<IonLoading
+			isOpen={showLoading}
+			onDidDismiss={() => setShowLoading(false)}
+			message={'Cargando...'}
+			duration={3000}
+		/>
+
 	</IonApp>
 	);
   }

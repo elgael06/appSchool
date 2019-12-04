@@ -1,10 +1,9 @@
 import { connect } from 'react-redux'
-import { addUsuario } from '../actions';
+import { addUsuario, change_loading } from '../actions';
 import Apps, { iLogUsuario } from '../pages/login';
 
 
 const mapStateToProps = (state:any) =>({
-
 });
 
 const mapDispatchToProps = (dispatch:any) =>({
@@ -17,6 +16,9 @@ const mapDispatchToProps = (dispatch:any) =>({
       console.log(user);
       dispatch(addUsuario(user))
     }
+  },
+  setShowLoading(status:boolean){
+	dispatch(change_loading(status))
   }
 });
 

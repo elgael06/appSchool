@@ -1,19 +1,19 @@
 import React from 'react';
-import { IonContent, IonHeader, IonItem, IonLabel, IonPage, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonInput, IonButton, IonLoading } from '@ionic/react';
+import { IonContent, IonHeader, IonItem, IonLabel, IonPage, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonInput, IonButton } from '@ionic/react';
 import { useState } from 'react';
 
 export interface iPropsApps{
-	evAddUsuario:(user:iLogUsuario)=>void
+	evAddUsuario:(user:iLogUsuario)=>void,
+	setShowLoading:(status:boolean)=>void,
 }
 export interface iLogUsuario{
 	id:number,
 	password:string
 }
 
-const Apps = ({evAddUsuario}:iPropsApps) => {
+const Apps = ({evAddUsuario,setShowLoading}:iPropsApps) => {
 	const [usuario,setUsuario] 		= useState('');
 	const [password,setPasword] 	= useState('');
-	const [showLoading,setShowLoading] = useState(false);
 
 	const eVsubmit = (e:any)=>{
 		setShowLoading(true);
@@ -58,13 +58,6 @@ const Apps = ({evAddUsuario}:iPropsApps) => {
         		</IonCardContent>
         	</IonCard>
     	</IonContent>
-
-		<IonLoading
-			isOpen={showLoading}
-			onDidDismiss={() => setShowLoading(false)}
-			message={'Cargando...'}
-			duration={3000}
-		/>
     </IonPage>);
 };
 

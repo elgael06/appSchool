@@ -8,6 +8,7 @@ const initialState:any = {
                 id:1,
                 nombre:"gael"
             },
+    showLoading:false
 };
 
 export default createStore(reducers,initialState);
