@@ -4,7 +4,8 @@ import { change_loading } from '../actions';
 
 
 const mapStateToProps = (state:any) =>({
-    showLoading:state.showLoading
+    showLoading:state.showLoading,
+    usuario:state.Usuario
 });
 
 const mapDispatchToProps = (dispatch:any) =>({

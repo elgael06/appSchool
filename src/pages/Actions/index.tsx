@@ -11,8 +11,8 @@ const Actions = ({usuario}:iPropsActions) => {
   useEffect(()=>{
 		const URL = window.location.pathname.split('/');
 		console.log(URL[1])
-		if(URL[1]!=='apps')
-			{(usuario.id>0)  || (function(){window.location.href = "login"}())}
+		//if(URL[1]!=='apps')
+			//{(usuario.id>0)  || (function(){window.location.href = "login"}())}
 	});
   return (
     <IonPage>

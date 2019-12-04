@@ -41,14 +41,17 @@ import Details from './pages/Details';
 import Home from './containers/Home';
 import Actions from './containers/Actions';
 import Apps from './containers/Login';
+import { iPropsUsuario } from './reducers/usuario';
 
 interface iPropsApp{
 	showLoading:boolean,
-	setShowLoading:(e:boolean)=>any
+	setShowLoading:(e:boolean)=>any,
+	usuario:iPropsUsuario
 }
 
-const App = ({showLoading, setShowLoading}:iPropsApp) =>{
+const App = ({showLoading, setShowLoading, usuario}:iPropsApp) =>{
 
+	console.log(usuario)
 	const evClose=()=>{
 		console.log("salir...");
 		window.location.href="/login";
@@ -57,23 +60,24 @@ const App = ({showLoading, setShowLoading}:iPropsApp) =>{
   return(<IonApp>
 
 		<IonReactRouter>
+		{usuario.id!==0 ?
 		<IonTabs>
+
 			<IonRouterOutlet>
 				<Route path="/home" component={Home} exact />
 				<Route path="/actions" component={Actions} exact />
 				<Route path="/actions/materia" component={Materias} exact />
-
-				<Route path="/login" component={Apps} exact />
-				<Route path="/login/Adduser" component={Details} />
-
 				<Route exact path="/asistencia" component={Asistencia} />
 				<Route exact path="/asistencia/:id" component={Asistencia} />
 
 				<Route exact path="/" render={() => <Redirect to="/home" />} />
+				<Route exact path="/login" render={() => <Redirect to="/home" />} />
+
 				<Route path="/*" component={Error} />
 
 			</IonRouterOutlet>
 
+			
 			<IonTabBar slot="bottom">
 
 				<IonTabButton tab="home" href="/home">
@@ -93,7 +97,15 @@ const App = ({showLoading, setShowLoading}:iPropsApp) =>{
 
 			</IonTabBar>
 
-		</IonTabs>
+		</IonTabs> 
+		: 
+		<IonRouterOutlet>
+				<Route path="/login" component={Apps} exact />
+				<Route path="/login/Adduser" component={Details} />
+				<Route path="/*" component={Error} />
+
+		</IonRouterOutlet>
+		}
 		</IonReactRouter>
 
 		<IonLoading
@@ -106,4 +118,7 @@ const App = ({showLoading, setShowLoading}:iPropsApp) =>{
 	</IonApp>
 	);
   }
+
+
+
 export default App;

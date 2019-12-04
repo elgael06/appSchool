@@ -25,8 +25,8 @@ const Home = ({usuario}:iPropsHome) => {
 	useEffect(()=>{
 		const URL = window.location.pathname.split('/');
 		console.log(URL[1])
-		if(URL[1]!=='apps')
-			{(usuario.id>0)  || (function(){window.location.href = "login"}())}
+		//if(URL[1]!=='apps')
+			//{(usuario.id>0)  || (function(){window.location.href = "login"}())}
 	});
   return (
     <IonPage>
@@ -41,7 +41,7 @@ const Home = ({usuario}:iPropsHome) => {
       </IonHeader>
       <IonContent>
     	{accesos.map((e:iAcesos)=>
-         <IonCard className="welcome-card" href={e.href} key={e.href}>
+         <IonCard className="welcome-card" routerLink={e.href} key={e.href}>
           	<IonCardHeader>
 				<IonCardTitle><IonIcon icon={e.icon} /> {e.title}</IonCardTitle>
 				<IonCardSubtitle>{e.subtitle}</IonCardSubtitle>
