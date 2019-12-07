@@ -36,7 +36,7 @@ import Error from './pages/Error';
 import Materias from './pages/Actions/Materias/';
 
 
-import Details from './pages/Details';
+import AddUser from './pages/login/AddUser';
 
 import Home from './containers/Home';
 import Actions from './containers/Actions';
@@ -77,7 +77,6 @@ const App = ({showLoading, setShowLoading, usuario}:iPropsApp) =>{
 
 			</IonRouterOutlet>
 
-			
 			<IonTabBar slot="bottom">
 
 				<IonTabButton tab="home" href="/home">
@@ -100,10 +99,11 @@ const App = ({showLoading, setShowLoading, usuario}:iPropsApp) =>{
 		</IonTabs> 
 		: 
 		<IonRouterOutlet>
-				<Route path="/login" component={Apps} exact />
-				<Route path="/login/Adduser" component={Details} />
-				<Route path="/*" component={Error} />
+				<Route exact path="/login" component={Apps} />
+				<Route exact path="/login/Adduser" component={AddUser} />
 
+				<Route exact path="/home" render={() => <Redirect to="/login" />} />
+				<Route exact path="/" render={() => <Redirect to="/login" />} />
 		</IonRouterOutlet>
 		}
 		</IonReactRouter>
