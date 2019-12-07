@@ -7,14 +7,11 @@ import {
   IonRouterOutlet,
   IonTabBar,
   IonTabButton,
-  IonTabs
+  IonTabs,
+  IonLoading
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { home, power, cog } from 'ionicons/icons';
-import Home from './pages/Home';
-import Apps from './pages/Apps';
-import Actions from './pages/Actions/Actions';
-import Details from './pages/Details';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -38,41 +35,90 @@ import Asistencia from './pages/asistencia/';
 import Error from './pages/Error';
 import Materias from './pages/Actions/Materias/';
 
-const App: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-      <IonTabs>
-        <IonRouterOutlet>
-          <Route path="/home" component={Home} exact />
-          <Route path="/actions" component={Actions} exact />
-          <Route path="/actions/materia" component={Materias} exact />
 
-          <Route path="/apps" component={Apps} exact />
-          <Route path="/apps/details" component={Details} />
+import AddUser from './pages/login/AddUser';
 
-          <Route path="/asistencia" component={Asistencia} />
-          <Route path="/asistencia/:id" component={Asistencia} />
+import Home from './containers/Home';
+import Actions from './containers/Actions';
+import Apps from './containers/Login';
+import { iPropsUsuario } from './reducers/usuario';
 
-          <Route path="/" render={() => <Redirect to="/home" />} exact={true} />
-          <Route path="/*" component={Error} />
-        </IonRouterOutlet>
-        <IonTabBar slot="bottom">
-          <IonTabButton tab="home" href="/home">
-            <IonIcon icon={home} />
-            <IonLabel>Inicio</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="actions" href="/actions">
-            <IonIcon icon={cog} />
-            <IonLabel>Acciones</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="apps" href="/apps">
-            <IonIcon icon={power} />
-            <IonLabel>Salir</IonLabel>
-          </IonTabButton>
-        </IonTabBar>
-      </IonTabs>
-    </IonReactRouter>
-  </IonApp>
-);
+interface iPropsApp{
+	showLoading:boolean,
+	setShowLoading:(e:boolean)=>any,
+	usuario:iPropsUsuario
+}
+
+const App = ({showLoading, setShowLoading, usuario}:iPropsApp) =>{
+
+	console.log(usuario)
+	const evClose=()=>{
+		console.log("salir...");
+		window.location.href="/login";
+	}
+  
+  return(<IonApp>
+
+		<IonReactRouter>
+		{usuario.id!==0 ?
+		<IonTabs>
+
+			<IonRouterOutlet>
+				<Route path="/home" component={Home} exact />
+				<Route path="/actions" component={Actions} exact />
+				<Route path="/actions/materia" component={Materias} exact />
+				<Route exact path="/asistencia" component={Asistencia} />
+				<Route exact path="/asistencia/:id" component={Asistencia} />
+
+				<Route exact path="/" render={() => <Redirect to="/home" />} />
+				<Route exact path="/login" render={() => <Redirect to="/home" />} />
+
+				<Route path="/*" component={Error} />
+
+			</IonRouterOutlet>
+
+			<IonTabBar slot="bottom">
+
+				<IonTabButton tab="home" href="/home">
+					<IonIcon icon={home} />
+					<IonLabel>Inicio</IonLabel>
+				</IonTabButton>
+
+				<IonTabButton tab="actions" href="/actions">
+					<IonIcon icon={cog} />
+					<IonLabel>Acciones</IonLabel>
+				</IonTabButton>
+
+				<IonTabButton tab="salir" onClick={evClose}>
+					<IonIcon icon={power} />
+					<IonLabel>Salir</IonLabel>
+				</IonTabButton>
+
+			</IonTabBar>
+
+		</IonTabs> 
+		: 
+		<IonRouterOutlet>
+				<Route exact path="/login" component={Apps} />
+				<Route exact path="/login/Adduser" component={AddUser} />
+
+				<Route exact path="/home" render={() => <Redirect to="/login" />} />
+				<Route exact path="/" render={() => <Redirect to="/login" />} />
+		</IonRouterOutlet>
+		}
+		</IonReactRouter>
+
+		<IonLoading
+			isOpen={showLoading}
+			onDidDismiss={() => setShowLoading(false)}
+			message={'Cargando...'}
+			duration={3000}
+		/>
+
+	</IonApp>
+	);
+  }
+
+
 
 export default App;

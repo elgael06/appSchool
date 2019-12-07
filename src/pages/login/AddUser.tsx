@@ -1,19 +1,19 @@
 import React from 'react';
 import { IonBackButton, IonButtons, IonHeader, IonPage, IonToolbar, IonTitle, IonContent } from '@ionic/react';
 
-const Details: React.FC = () => {
+const AddUser: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/apps" />
+            <IonBackButton defaultHref="/login" />
           </IonButtons>
-          <IonTitle>Detail</IonTitle>
+          <IonTitle>Nuevo Profesor</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <p>Details</p>
+        <p>Datos</p>
         <strong>this is an asignation.</strong>
         
       </IonContent>
@@ -21,4 +21,4 @@ const Details: React.FC = () => {
   );
 };
 
-export default Details;
+export default AddUser;
