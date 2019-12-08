@@ -139,6 +139,18 @@ export const select = ({
                 });                
             });
         }
+    },
+    login(id:number,password:string,getSesion:(sesion:any)=>void){
+        db.readTransaction(function (tx:SQLTransaction) {
+            tx.executeSql("SELECT * FROM profesores WHERE id=? AND password=? ;", [id,password],function(tx:SQLTransaction, results){
+                console.log(results.rows.length)
+                if (results.rows.length>0){
+                    getSesion(results.rows.item(0))
+                }else{
+                    getSesion(null)
+                }        
+            });                
+        });
     }
 });
 /**

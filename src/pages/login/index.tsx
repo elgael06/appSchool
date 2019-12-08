@@ -1,6 +1,8 @@
 import React from 'react';
+import {useHistory} from 'react-router-dom';
 import { IonContent, IonHeader, IonItem, IonLabel, IonPage, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonInput, IonButton } from '@ionic/react';
 import { useState } from 'react';
+import { select } from '../../manager/sql.services';
 
 export interface iPropsApps{
 	evAddUsuario:(user:iLogUsuario)=>void,
@@ -12,6 +14,7 @@ export interface iLogUsuario{
 }
 
 const Apps = ({evAddUsuario,setShowLoading}:iPropsApps) => {
+	const hist = useHistory();
 	const [usuario,setUsuario] 		= useState('');
 	const [password,setPasword] 	= useState('');
 
@@ -19,10 +22,26 @@ const Apps = ({evAddUsuario,setShowLoading}:iPropsApps) => {
 		setShowLoading(true);
 		console.log('iniciar...');
 		e.preventDefault();
-		!evAddUsuario ||evAddUsuario({
-			id:parseInt(usuario),
-			password:password
-		})
+		select.login(parseInt( usuario ),password,evSesion)
+		
+	}
+
+	const evSesion=(respuesta:any):void =>{
+		console.log("Sesion=>",respuesta)
+		if(respuesta==null)
+			setTimeout(()=>{
+				alert('Error sesion...')
+			},
+			2000);
+		else
+			setTimeout(()=>{
+				!evAddUsuario ||evAddUsuario({
+					id:parseInt(usuario),
+					password:password
+				});
+				hist.push('/ckndsve')
+			},
+			2000);			
 	}
 
 	return (<IonPage>
@@ -47,7 +66,7 @@ const Apps = ({evAddUsuario,setShowLoading}:iPropsApps) => {
 							<IonInput type="password" value={password} onIonChange={(e:any)=>setPasword(e.target.value)} />
 						</IonItem>
 						<hr/>
-						<IonButton routerLink="/home" onSubmitCapture={eVsubmit} type="submit" disabled={!(usuario!=="" && password!=="")} expand="full">Ingresar</IonButton>
+						<IonButton onSubmitCapture={eVsubmit} type="submit" disabled={!(usuario!=="" && password!=="")} expand="full">Ingresar</IonButton>
 					</form>
 					<hr/>
 
