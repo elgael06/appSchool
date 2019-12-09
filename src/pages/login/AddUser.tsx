@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonBackButton, IonButtons, IonHeader, IonPage, IonToolbar, IonTitle, IonContent, IonItemGroup, IonItem, IonInput, IonButton } from '@ionic/react';
+import { IonBackButton, IonButtons, IonHeader, IonPage, IonToolbar, IonTitle, IonContent, IonItemGroup, IonItem, IonInput, IonButton, IonLabel } from '@ionic/react';
 
 const AddUser = () => {
 	const evSubmit = (e:any)=>{
@@ -10,7 +10,7 @@ const AddUser = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar>
+        <IonToolbar color="success">
           <IonButtons slot="start">
             <IonBackButton defaultHref="/login" />
           </IonButtons>
@@ -22,44 +22,41 @@ const AddUser = () => {
 		<form style={{padding:15}} onSubmitCapture={evSubmit}>
         <IonItemGroup>
           <IonItem>
-            <label>Nombres : </label>
+            <IonLabel position="floating">Nombres : </IonLabel>
             <IonInput
 			  	required
-              placeholder="Nombres." 
             />
           </IonItem>
           <IonItem>
-            <label>Apeido Paterno : </label>
+            <IonLabel position="floating">Apeido Paterno : </IonLabel>
             <IonInput
 			  	required
-              placeholder="Apeido Paterno." 
             />
           </IonItem>
           <IonItem>
-            <label>Apeido Materno : </label>
+            <IonLabel position="floating">Apeido Materno : </IonLabel>
             <IonInput
 			  	required
-              placeholder="Apeido Materno." 
             />
           </IonItem>
           <IonItem>
-            <label>Password : </label>
+            <IonLabel position="floating">Password : </IonLabel>
             <IonInput
-			  	required
+				required  
                  type="password"
             />
 			</IonItem>
             <IonItem>
-              <label>Confitmar Password : </label>
+              <IonLabel position="floating">Confitmar Password : </IonLabel>
               <IonInput
-				required 
+				required
                 type="password"
               />
           </IonItem>
 			<IonItem>
 			</IonItem>
 
-			<IonButton type="submit"  onSubmitCapture={evSubmit} expand="block">
+			<IonButton type="submit" color="success" onSubmitCapture={evSubmit} expand="block">
 					Guardar
 				</IonButton>
         </IonItemGroup>

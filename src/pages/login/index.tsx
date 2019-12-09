@@ -56,26 +56,26 @@ const Apps = ({evAddUsuario,setShowLoading}:iPropsApps) => {
 					<IonCardTitle>Iniciar Secion.</IonCardTitle>
 				</IonCardHeader>
 	          	<IonCardContent>
-					<form onSubmit={eVsubmit}>
+					<form onSubmitCapture={eVsubmit}>
 						<IonItem>
-						<IonLabel position="floating">Id Usuario</IonLabel>
-						<IonInput type="number" onIonChange={(e:any)=>setUsuario(e.target.value)} value={usuario} />
+							<IonLabel position="floating">Id Usuario</IonLabel>
+							<IonInput type="number" onIonChange={(e:any)=>setUsuario(e.target.value)} value={usuario} />
 						</IonItem>
 						<IonItem>
 							<IonLabel position="floating">Contraseña</IonLabel>
 							<IonInput type="password" value={password} onIonChange={(e:any)=>setPasword(e.target.value)} />
 						</IonItem>
 						<hr/>
-						<IonButton onSubmitCapture={eVsubmit} type="submit" disabled={!(usuario!=="" && password!=="")} expand="full">Ingresar</IonButton>
+						<IonButton color="primary" onSubmitCapture={eVsubmit} type="submit" disabled={!(usuario!=="" && password!=="")} expand="full">Ingresar</IonButton>
 					</form>
 					<hr/>
 
-					<IonButton color="success" style={{float:'right',margin:20}} routerLink="/Login/Adduser">
-						<h2>Crear Usuario.</h2>
-					</IonButton>
 
         		</IonCardContent>
         	</IonCard>
+					<IonButton color="success" style={{position:'fixed', margin:20, bottom:0,display:'flex',right:0 }} routerLink="/Login/Adduser">
+					Crear Usuario
+					</IonButton>
     	</IonContent>
     </IonPage>);
 };
