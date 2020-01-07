@@ -12,7 +12,7 @@ export const addUsuario = (usuario:iPropsUsuario) =>({
 /**
  * SHOW_LOADING
  */
-export const change_loading =(status:boolean)=>({
+export const change_loading = (status:boolean) => ({
     type:TYPES.CHANGE_SHOW_LOADING,
     status
 });

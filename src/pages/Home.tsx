@@ -11,45 +11,56 @@ import {
   IonIcon
 } from '@ionic/react';
 import { contact } from 'ionicons/icons';
+import { connect } from 'react-redux';
 
 import React, { useEffect } from 'react';
 import './Tab1.css';
 import accesos, { iAcesos } from '../models/accesos';
 import { iPropsUsuario } from '../reducers/usuario';
+import { useParams } from 'react-router';
 
 interface iPropsHome{
   usuario:iPropsUsuario
 } 
 
 const Home = ({usuario}:iPropsHome) => {
+  const url =   useParams();
 	useEffect(()=>{
-		const URL = window.location.pathname.split('/');
-		console.log(URL[1])
-		//if(URL[1]!=='apps')
-			//{(usuario.id>0)  || (function(){window.location.href = "login"}())}
-	});
-  return (
-    <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>
-			Bienvenido
-    		<u style={{padding:5}}>{usuario.nombre}</u>
-			<IonIcon icon={contact} style={{float:'right'}} />
-		  </IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent>
-    	{accesos.map((e:iAcesos)=>
-         <IonCard className="welcome-card" routerLink={e.href} key={e.href}>
-          	<IonCardHeader>
-				<IonCardTitle><IonIcon icon={e.icon} /> {e.title}</IonCardTitle>
-				<IonCardSubtitle>{e.subtitle}</IonCardSubtitle>
-          	</IonCardHeader>
-        </IonCard>)}
-      </IonContent>
-    </IonPage>
+    console.log(url);
+    console.log('usuario:',usuario);
+	},[]);
+
+  	return (<IonPage>
+		<IonHeader>
+			<IonToolbar>
+				<IonTitle>
+					Bienvenido
+					<u style={{padding:5}}>{usuario.nombre}</u>
+					<IonIcon icon={contact} style={{float:'right'}} />
+				</IonTitle>
+			</IonToolbar>
+		</IonHeader>
+		<IonContent>
+			{accesos.map((e:iAcesos)=>
+				<IonCard className="welcome-card" routerLink={e.href} key={e.href}>
+					<IonCardHeader>
+						<IonCardTitle><IonIcon icon={e.icon} /> {e.title}</IonCardTitle>
+						<IonCardSubtitle>{e.subtitle}</IonCardSubtitle>
+					</IonCardHeader>
+				</IonCard>)}
+		</IonContent>
+	</IonPage>
   );
 };
 
-export default Home;
+
+
+const mapStateToProps = (state:any) =>({
+    usuario:state.Usuario
+});
+
+const mapDispatchToProps = (dispatch:any) =>({
+
+});
+
+export default connect(mapStateToProps,mapDispatchToProps)(Home);

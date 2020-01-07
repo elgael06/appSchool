@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { IonHeader, IonToolbar, IonPage, IonTitle, IonContent, IonCard, IonCardHeader, IonCardTitle, IonIcon } from '@ionic/react';
 import { addCircle } from 'ionicons/icons';
 import { iPropsUsuario } from '../../reducers/usuario';
-
+import { connect } from 'react-redux'
 interface iPropsActions{
   usuario:iPropsUsuario
 } 
@@ -32,4 +32,12 @@ const Actions = ({usuario}:iPropsActions) => {
   );
 };
 
-export default Actions;
+
+const mapStateToProps = (state:any) =>({
+  usuario:state.Usuario
+});
+
+const mapDispatchToProps = (dispatch:any) =>({
+});
+
+export default connect(mapStateToProps,mapDispatchToProps)(Actions);

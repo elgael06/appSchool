@@ -10,13 +10,18 @@ export interface iActionsUsuario{
     usuario:iPropsUsuario
 }
 
-const Usuario:any = (state:iPropsUsuario,actions:iActionsUsuario) =>{
-    
+const Usuario:any = (state:iPropsUsuario,actions:any) =>{
+    console.log('actions usuario');
+    console.log(actions.type);
+    console.log(state)
     switch(actions.type){
         case TYPES.ADD_USUARIO:
             return actions.usuario;
         case TYPES.REMOVE_USUARIO:
-            return null;
+            return {   
+                id:0,
+                nombre:""
+            };
         case TYPES.UPDATE_USUARIO:
             return actions.usuario;
         case TYPES.GET_USUARIO:
@@ -24,7 +29,7 @@ const Usuario:any = (state:iPropsUsuario,actions:iActionsUsuario) =>{
         default:
             return {   
                     id:0,
-                    nombre:""
+                    nombre:"g"
                 }
     }
 }

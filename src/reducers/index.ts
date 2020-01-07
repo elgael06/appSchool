@@ -6,8 +6,8 @@ import showLoading from './showLoading';
 
 
 const reducer:any = combineReducers({
+    showLoading,
     Usuario,
-    showLoading
 });
 
 export default reducer;

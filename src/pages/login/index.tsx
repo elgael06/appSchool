@@ -1,7 +1,9 @@
 import React from 'react';
-import {useHistory} from 'react-router-dom';
-import { IonContent, IonHeader, IonItem, IonLabel, IonPage, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonInput, IonButton } from '@ionic/react';
+import { IonContent, IonHeader, IonItem, IonLabel, IonPage, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonInput, IonButton, IonAlert } from '@ionic/react';
 import { useState } from 'react';
+import { connect } from 'react-redux';
+import { addUsuario } from './actions';
+import {change_loading} from '../../actions';
 import { select } from '../../manager/sql.services';
 
 export interface iPropsApps{
@@ -13,35 +15,31 @@ export interface iLogUsuario{
 	password:string
 }
 
-const Apps = ({evAddUsuario,setShowLoading}:iPropsApps) => {
-	const hist = useHistory();
+const Login = ({evAddUsuario,setShowLoading}:iPropsApps) => {
 	const [usuario,setUsuario] 		= useState('');
 	const [password,setPasword] 	= useState('');
+	const [msgError,setMsgError]	= useState(false);
 
 	const eVsubmit = (e:any)=>{
 		setShowLoading(true);
 		console.log('iniciar...');
 		e.preventDefault();
-		select.login(parseInt( usuario ),password,evSesion)
+		select.login(parseInt( usuario ),password,evSesion);
 		
 	}
 
-	const evSesion=(respuesta:any):void =>{
+	const evSesion = (respuesta:any):void =>{
 		console.log("Sesion=>",respuesta)
-		if(respuesta==null)
-			setTimeout(()=>{
-				alert('Error sesion...')
-			},
-			2000);
+		//setTimeout(()=>setShowLoading(false),1000);
+		if(respuesta==null){
+			setShowLoading(false);
+			setMsgError(true);
+		}
 		else
-			setTimeout(()=>{
-				!evAddUsuario ||evAddUsuario({
-					id:parseInt(usuario),
-					password:password
-				});
-				hist.push('/ckndsve')
-			},
-			2000);			
+			evAddUsuario(respuesta);
+	}
+	const acceptError =()=>{
+		setMsgError(false);
 	}
 
 	return (<IonPage>
@@ -77,7 +75,36 @@ const Apps = ({evAddUsuario,setShowLoading}:iPropsApps) => {
 					Crear Usuario
 					</IonButton>
     	</IonContent>
+		<IonAlert 
+			isOpen={msgError}
+			header='Error, sesion.'
+			onDidDismiss={acceptError}
+			message='el usuario y/o la contraseña son incorrectos.'
+			buttons={['Aceptar']}
+		/>
     </IonPage>);
 };
 
-export default Apps;
+
+const mapStateToProps = (state:any) =>({
+});
+
+const mapDispatchToProps = (dispatch:any) =>({
+  evAddUsuario(usuario:any){
+    if(usuario.id>0){
+      let user={
+        id:usuario.id,
+        nombre:`${usuario.nombre}.`
+      }
+      console.log(user);
+      dispatch(addUsuario(user))
+    }
+  },
+  setShowLoading(status:boolean){
+	dispatch(change_loading(status))
+  }
+});
+
+export default connect(
+    mapStateToProps,
+  mapDispatchToProps)(Login);

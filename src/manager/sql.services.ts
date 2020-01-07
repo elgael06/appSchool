@@ -84,9 +84,15 @@ export const insert = ({
             tx.executeSql("INSERT INTO alumnos (name, lastName, appPat, appMat, idGrupo) VALUES (?,?,?,?,?)", [name,lastName,appPat,appMat,idGrupo]);
         });
     },
-    Profesor(name:string,lastName:string,appPat:string,appMat:string,clave:Number){
+    Profesor(name:string,appPat:string,appMat:string,clave:String,email:string){
+        const today = new Date();
         db.transaction(function (tx:any) {
-            tx.executeSql("INSERT INTO profesores (name, lastName, appPat, appMat, Clave) VALUES (?,?,?,?,?)", [name,lastName,appPat,appMat,clave]);
+            //id, clave, usuario, password, nombre, apellidoPaterno, apellidoMaterno, email VARCHAR(45) NOT NULL,
+            //mesesPrueba INT NOT NULL DEFAULT 1, terminoPrueba BIT NOT NULL DEFAULT 0, idTipoTurno INT NOT NULL DEFAULT 1,
+            // idStatus INT NOT NULL DEFAULT 1, fechaCreacion DATETIME NOT NULL, fechaUltimaActualizacion DATETIME NOT NULL
+            tx.executeSql("INSERT INTO profesores (nombre, apellidoPaterno, apellidoMaterno, password, email, fechaCreacion,fechaUltimaActualizacion,clave ) VALUES (?,?,?,?,?,?,?,1)",
+             [name,appPat,appMat,clave,email,today.getTime(),today.getTime()]);
+             console.log('guardado en bd...')
         });    
     },
     MateriasProfesor(idProfesor:Number,idMateria:Number){
@@ -143,7 +149,6 @@ export const select = ({
     login(id:number,password:string,getSesion:(sesion:any)=>void){
         db.readTransaction(function (tx:SQLTransaction) {
             tx.executeSql("SELECT * FROM profesores WHERE id=? AND password=? ;", [id,password],function(tx:SQLTransaction, results){
-                console.log(results.rows.length)
                 if (results.rows.length>0){
                     getSesion(results.rows.item(0))
                 }else{
