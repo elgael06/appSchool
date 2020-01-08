@@ -1,4 +1,4 @@
-import { TYPES } from "../constants";
+import {  ADD_USUARIO, REMOVE_USUARIO, UPDATE_USUARIO, GET_USUARIO } from "../constants";
 
 
 export interface iPropsUsuario{
@@ -11,26 +11,24 @@ export interface iActionsUsuario{
 }
 
 const Usuario:any = (state:iPropsUsuario,actions:any) =>{
-    console.log('actions usuario');
-    console.log(actions.type);
-    console.log(state)
+    let {id,nombre} = JSON.parse(sessionStorage.getItem('usuario') || '{"id":0,"nombre":""}');
     switch(actions.type){
-        case TYPES.ADD_USUARIO:
+        case ADD_USUARIO:
+            sessionStorage.setItem('usuario',JSON.stringify(actions.usuario));
             return actions.usuario;
-        case TYPES.REMOVE_USUARIO:
+        case REMOVE_USUARIO:
+            sessionStorage.removeItem('usuario');
             return {   
                 id:0,
                 nombre:""
             };
-        case TYPES.UPDATE_USUARIO:
+        case UPDATE_USUARIO:
+            sessionStorage.setItem('usuario',JSON.stringify(actions.usuario));
             return actions.usuario;
-        case TYPES.GET_USUARIO:
-            return state;
+        case GET_USUARIO:
+            return {id,nombre,}
         default:
-            return {   
-                    id:0,
-                    nombre:"g"
-                }
+            return {id,nombre,}
     }
 }
 

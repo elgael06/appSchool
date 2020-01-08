@@ -64,12 +64,12 @@ export const create = ({
  * INSERT TO TABLE.
  */
 export const insert = ({
-    Materia(name:string){
+    Materia:(name:string)=>{
         db.transaction(function (tx:any) {
             tx.executeSql("INSERT INTO materias (name) VALUES (?)", [name]);
         });
     },
-    Grupo(name:string){
+    Grupo:(name:string)=>{
         db.transaction(function (tx:any) {
             tx.executeSql("INSERT INTO grupos (name) VALUES (?)", [name]);
         });
@@ -146,7 +146,7 @@ export const select = ({
             });
         }
     },
-    login(id:number,password:string,getSesion:(sesion:any)=>void){
+    login:(id:number,password:string,getSesion:(sesion:any)=>void)=>{
         db.readTransaction(function (tx:SQLTransaction) {
             tx.executeSql("SELECT * FROM profesores WHERE id=? AND password=? ;", [id,password],function(tx:SQLTransaction, results){
                 if (results.rows.length>0){

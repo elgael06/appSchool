@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { IonBackButton, IonButtons, IonHeader, IonPage, IonToolbar, IonTitle, IonContent, IonItemGroup, IonItem, IonInput, IonButton, IonLabel } from '@ionic/react';
 import { insert } from '../../manager/sql.services';
-import { type } from 'os';
 
 const AddUser = () => {
   const [name,setName] = useState('');

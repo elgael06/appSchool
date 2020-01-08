@@ -1,4 +1,4 @@
-import { TYPES } from "../constants";
+import { CHANGE_SHOW_LOADING } from "../constants";
 
 export interface iActionsShowLoading{
     type:string,
@@ -7,12 +7,13 @@ export interface iActionsShowLoading{
 
 const showLoading:any=(state:boolean,actions:iActionsShowLoading)=>{
     switch(actions.type){
-        case TYPES.CHANGE_SHOW_LOADING:
-            console.log('change status')
+        case CHANGE_SHOW_LOADING:
             return actions.status;
         default:
-            return 0;
+            return false;
     }
 }
 
 export default showLoading;
+
+

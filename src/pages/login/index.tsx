@@ -24,13 +24,12 @@ const Login = ({evAddUsuario,setShowLoading}:iPropsApps) => {
 		setShowLoading(true);
 		console.log('iniciar...');
 		e.preventDefault();
-		select.login(parseInt( usuario ),password,evSesion);
+		setTimeout(()=>select.login(parseInt( usuario ),password,evSesion),300);
 		
 	}
 
 	const evSesion = (respuesta:any):void =>{
 		console.log("Sesion=>",respuesta)
-		//setTimeout(()=>setShowLoading(false),1000);
 		if(respuesta==null){
 			setShowLoading(false);
 			setMsgError(true);

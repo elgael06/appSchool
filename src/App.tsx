@@ -42,10 +42,11 @@ import { change_loading } from './actions/';
 
 interface iPropsApp{
 	showLoading:boolean,
-	usuario:iPropsUsuario
+	usuario:iPropsUsuario,
+	onLoading:(e:boolean)=>void
 }
 
-const App = ({showLoading, usuario}:iPropsApp) =>{
+const App = ({showLoading, usuario,onLoading}:iPropsApp) =>{
 	
 	console.log(usuario)
   
@@ -79,6 +80,7 @@ const App = ({showLoading, usuario}:iPropsApp) =>{
 			isOpen={showLoading}
 			message={'Cargando...'}
 			duration={3000}
+			onDidDismiss={()=>onLoading(false)}
 		/>
 	</IonApp>
 	);
@@ -92,6 +94,9 @@ const mapStateToProps = (state:any) =>({
 });
 
 const mapDispatchToProps = (dispatch:any) =>({
+	onLoading(status:boolean){
+		dispatch(change_loading(status))
+	}
 });
 
 export default connect(mapStateToProps,mapDispatchToProps)(App);

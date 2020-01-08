@@ -5,8 +5,8 @@ import reducers from '../reducers';
 
 const initialState:any = {
     Usuario: {
-                id:1,
-                nombre:"gael"
+                id:0,
+                nombre:""
             },
     showLoading:false
 };

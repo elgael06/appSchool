@@ -1,11 +1,11 @@
-import { TYPES } from "../constants"
+import { ADD_USUARIO, CHANGE_SHOW_LOADING } from "../constants/"
 import { iPropsUsuario } from "../reducers/usuario"
 
 /**
- * USUARIOS
+ * ADD_USUARIO
  */
 export const addUsuario = (usuario:iPropsUsuario) =>({
-    type:TYPES.ADD_USUARIO,
+    type:ADD_USUARIO,
     usuario
 });
 
@@ -13,6 +13,6 @@ export const addUsuario = (usuario:iPropsUsuario) =>({
  * SHOW_LOADING
  */
 export const change_loading = (status:boolean) => ({
-    type:TYPES.CHANGE_SHOW_LOADING,
+    type:CHANGE_SHOW_LOADING,
     status
 });
