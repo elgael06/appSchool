@@ -3,7 +3,14 @@ import { Redirect, Route } from 'react-router-dom';
 import {
   IonApp,
   IonRouterOutlet,
-  IonLoading
+  IonLoading,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonIcon,
+  IonPage,
+  IonContent,
+  IonImg
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 
@@ -39,6 +46,7 @@ import AppTaps from './pages/layout/AppTaps';
 
 import { connect } from 'react-redux'
 import { change_loading } from './actions/';
+import { contact } from 'ionicons/icons';
 
 interface iPropsApp{
 	showLoading:boolean,
@@ -50,21 +58,42 @@ const App = ({showLoading, usuario,onLoading}:iPropsApp) =>{
 	
 	console.log(usuario)
   
-  return(<IonApp>
-		<IonReactRouter>
+  return(<IonApp >
+	<IonReactRouter>
 		{usuario.id ?
-		<AppTaps>
-				<Route path="/home" component={Home} exact />
-				<Route path="/actions" component={Actions} exact />
-				<Route path="/actions/materia" component={Materias} exact />
-				<Route exact path="/asistencia" component={Asistencia} />
-				<Route exact path="/asistencia/:id" component={Asistencia} />
+		<IonPage>
+			<IonHeader mode='md'>
+				<IonToolbar color='primary' mode='md'>
+					<IonTitle >
+						<u style={{padding:5,float:'left'}}>{usuario.nombre}</u> 
+					{usuario.foto?
+					<IonImg 
+						src={usuario.foto} 
+						alt='foto' 
+						style={{position:'absolute',right:'-15px',top:'-3px',height:'40px',with:'40px'}} 
+					/>:
+					<IonIcon 
+						icon={contact}
+						style={{position:'absolute',right:'15px',top:'-2px',fontSize:'35px'}}
+					/>}
+					</IonTitle>
+				</IonToolbar>
+			</IonHeader>
+			<IonContent>
+				<AppTaps>
+					<Route exact={true} path="/home/" component={Home} />
+					<Route exact={true} path="/actions/" component={Actions} />
+					<Route exact={true} path="/materia/Edit" component={Materias} />
+					<Route exact={true} path="/asistencia" component={Asistencia} />
+					<Route exact={true} path="/asistencia/:id" component={Asistencia} />
 
-				<Route exact path="/login" render={() => <Redirect to="/home" />} />
-				<Route exact path="/login/Adduser" render={() => <Redirect to="/home" />} />
+					<Route exact={true} path="/login" render={() => <Redirect to="/home" />} />
+					<Route exact={true} path="/login/Adduser" render={() => <Redirect to="/home" />} />
 
-				<Route path="/*" component={Error} />	
-		</AppTaps>
+					<Route path="/*" component={Error} />
+				</AppTaps>
+			</IonContent>
+		</IonPage>
 		: 
 		(<IonRouterOutlet>
 				<Route exact path="/login" component={Login} />
@@ -75,7 +104,7 @@ const App = ({showLoading, usuario,onLoading}:iPropsApp) =>{
 
 				<Route path="/*" component={Error} />
 		</IonRouterOutlet>)}
-		</IonReactRouter>
+	</IonReactRouter>
 		<IonLoading
 			isOpen={showLoading}
 			message={'Cargando...'}

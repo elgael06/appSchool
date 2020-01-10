@@ -1,9 +1,11 @@
 import React from 'react';
 import { IonTabs, IonRouterOutlet, IonTabBar, IonTabButton, IonIcon, IonLabel } from '@ionic/react';
-import { home, cog, power } from 'ionicons/icons';
+import { home, cog, logOut } from 'ionicons/icons';
 import { connect } from 'react-redux';
 
 import {removeUsuario } from './actions';
+
+import * as firebase from "firebase/app";
  
 
 const AppTaps = ({children,onCloseSesion}:any) =>{
@@ -13,16 +15,16 @@ const AppTaps = ({children,onCloseSesion}:any) =>{
         </IonRouterOutlet>
         <IonTabBar slot="bottom">
 
-        <IonTabButton tab="home" href="/home">
+        <IonTabButton tab="home" href="/home/">
             <IonIcon icon={home} />
                 <IonLabel>Inicio</IonLabel>
             </IonTabButton>
-            <IonTabButton tab="actions" href="/actions">
+            <IonTabButton tab="actions" href="/actions/">
                 <IonIcon icon={cog} />
                 <IonLabel>Acciones</IonLabel>
             </IonTabButton>
-            <IonTabButton tab="salir" href="/home" onClick={onCloseSesion}>
-                <IonIcon icon={power} />
+            <IonTabButton tab="salir" href="/home/" onClick={onCloseSesion}>
+                <IonIcon icon={logOut} />
                 <IonLabel>Salir</IonLabel>
             </IonTabButton>
         </IonTabBar>
@@ -36,8 +38,9 @@ const mapStateToProps = (state:any) =>({
 });
 
 const mapDispatchToProps = (dispatch:any) =>({
-  onCloseSesion(){
-      dispatch(removeUsuario());
+  async onCloseSesion(){
+        await firebase.auth().signOut();
+        dispatch(removeUsuario());
   }
 });
 

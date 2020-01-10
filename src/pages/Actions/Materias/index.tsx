@@ -13,12 +13,12 @@ import {
 	IonCardTitle,
 	IonCard,
 	IonContent,
-	IonInput,
 	IonItemGroup,
 	IonItem,
 	IonActionSheet,
-	IonAlert
-  } from '@ionic/react';
+	IonAlert,
+	IonSearchbar
+} from '@ionic/react';
 import React,{FC, useEffect} from 'react';
 import { add, bookmarks } from 'ionicons/icons';
 import { useState } from 'react';
@@ -76,7 +76,7 @@ const Materias : FC = () =>{
 				<IonButtons slot="start">
 					<IonBackButton defaultHref="/actions" />
 				</IonButtons>
-            	<IonTitle style={{float:'left',marginTop:10}}>
+            	<IonTitle style={{float:'left',marginTop:3}}>
 				Materias
 				</IonTitle>
           </IonToolbar>
@@ -84,13 +84,12 @@ const Materias : FC = () =>{
 
 		<IonContent>
 			{/** Filtro de lista Materias **/}
-			<IonItem  slot="fixed" style={{heigth:300,marginTop:1, background:"#FFFFFF"}}>
-				<IonInput 
-					placeholder="Buscar ..." 
-					value={filtro} 
-					autocomplete="off" 
-					onIonChange={(e:any)=>setFiltro(e.target.value.toUpperCase())} 
-					
+			<IonItem  slot="fixed" style={{marginTop:1, background:"#FFFFFF"}}>
+				<IonSearchbar
+				 placeholder="Buscar ..." 
+				 value={filtro} 
+				 autocomplete="off" 
+				 onIonChange={(e:any)=>setFiltro(e.target.value.toUpperCase())}
 				/>
 			</IonItem>
 			
@@ -103,7 +102,7 @@ const Materias : FC = () =>{
 					materias.filter((e:any)=>e.name.toUpperCase().search(filtro)>-1)
 					.map((e:any)=><IonCard className="welcome-card" key={e.idMateria} onClick={()=>evOpcionMateria(e.idMateria)}>
 					<IonCardHeader>
-						<IonCardTitle><IonIcon icon={bookmarks} /> {e.name}</IonCardTitle>
+						<IonCardTitle><IonIcon icon={bookmarks} style={{float:'right'}}/> {e.name}</IonCardTitle>
 					</IonCardHeader>
 				</IonCard>)
 			}
@@ -165,6 +164,13 @@ const Materias : FC = () =>{
 				isOpen={showActionSheet}
 				onDidDismiss={() => setShowActionSheet(false)}
 				buttons={[
+					{
+						text: 'Editar',
+						icon: 'book',
+						handler: () => {
+						console.log('Editar clicked=>',materia);
+						}
+					},
 					{
 						text: 'Eliminar',
 						role: 'destructive',

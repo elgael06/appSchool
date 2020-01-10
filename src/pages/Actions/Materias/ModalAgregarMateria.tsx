@@ -1,6 +1,18 @@
 import React, { useState } from 'react';
-import { IonContent, IonModal, IonHeader, IonToolbar, IonButtons, IonIcon, IonTitle, IonItem, IonLabel, IonInput, IonButton, IonRouterLink } from '@ionic/react';
-import { arrowBack, addCircle } from 'ionicons/icons';
+import { 
+    IonContent, 
+    IonModal, 
+    IonHeader, 
+    IonToolbar, 
+    IonIcon, 
+    IonTitle, 
+    IonItem, 
+    IonLabel, 
+    IonInput, 
+    IonButton, 
+    IonCard, 
+} from '@ionic/react';
+import {  close, save } from 'ionicons/icons';
 import { iModal } from './interfaces';
 
 
@@ -20,41 +32,45 @@ const ModalAgregarMateria = (props:iModal) => {
         }
     }
 
-	return(<IonModal 
+    return(<IonModal 
+        mode='ios'
         isOpen={props.openModal}
-        animated
         keyboardClose={false}
         showBackdrop={false}
         onDidDismiss={()=>props.setOpenModal(false)}
     >
         <IonHeader>
-            <IonToolbar>
-                <IonButtons slot="start" onClick={()=>props.setOpenModal(false)}>
-                    <IonRouterLink href="/actions/materia"></IonRouterLink>
-                    <IonIcon  icon={arrowBack} />
-                </IonButtons>
-                <IonTitle style={{marginTop:10}}>
-                    Agregar
-                </IonTitle>
-            </IonToolbar>
+        <IonToolbar>
+            	<IonTitle>				
+                    Nueva materia
+				</IonTitle>
+          </IonToolbar>
         </IonHeader>
 
         <IonContent >
+            <IonCard style={{height:'200px',padding:'5px'}}>
             <form onSubmit={evSubmit}>
-                <IonItem style={{marginTop:40}}>
-                    <IonLabel position="stacked">Nombre materia</IonLabel>
+                <IonItem style={{marginTop:4}}>
+                    <IonLabel position="floating">Nombre:</IonLabel>
                     <IonInput 
-                        placeholder="Escriba el nombre de la materia." 
                         autocomplete={'off'} 
                         value={materia} 
                         onIonChange={changed} 
                     />
                 </IonItem>
                 <IonButton disabled={materia===""} type="submit" style={{marginTop:40}} expand="full" >
-                    Agregar <IonIcon icon={addCircle} />
+                    Guardar <IonIcon style={{marginLeft:'20px'}} icon={save} />
                 </IonButton>
             </form>
+            </IonCard>
 		</IonContent>
+        <IonButton
+            color='danger'
+            onClick={()=>props.setOpenModal(false)}
+        >
+            cancelar
+            <IonIcon icon={close} />
+        </IonButton>
 	</IonModal>);
 }
 

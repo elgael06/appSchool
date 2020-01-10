@@ -6,7 +6,10 @@ import reducers from '../reducers';
 const initialState:any = {
     Usuario: {
                 id:0,
-                nombre:""
+                nombre:"",
+                email:'',
+                foto:'',
+                credential:''
             },
     showLoading:false
 };

@@ -3,7 +3,10 @@ import {  ADD_USUARIO, REMOVE_USUARIO, UPDATE_USUARIO, GET_USUARIO } from "../co
 
 export interface iPropsUsuario{
     id:number,
-    nombre:string
+    nombre:string,
+    email:string,
+    foto:string,
+    credential:string
 }
 export interface iActionsUsuario{
     type:string,
@@ -11,7 +14,7 @@ export interface iActionsUsuario{
 }
 
 const Usuario:any = (state:iPropsUsuario,actions:any) =>{
-    let {id,nombre} = JSON.parse(sessionStorage.getItem('usuario') || '{"id":0,"nombre":""}');
+    let {id,nombre,email,foto,credential} = JSON.parse(sessionStorage.getItem('usuario') || '{"id":0,"nombre":""}');
     switch(actions.type){
         case ADD_USUARIO:
             sessionStorage.setItem('usuario',JSON.stringify(actions.usuario));
@@ -20,15 +23,18 @@ const Usuario:any = (state:iPropsUsuario,actions:any) =>{
             sessionStorage.removeItem('usuario');
             return {   
                 id:0,
-                nombre:""
+                nombre:"",
+                email,
+                foto,
+                credential
             };
         case UPDATE_USUARIO:
             sessionStorage.setItem('usuario',JSON.stringify(actions.usuario));
             return actions.usuario;
         case GET_USUARIO:
-            return {id,nombre,}
+            return {id,nombre,email,foto,credential}
         default:
-            return {id,nombre,}
+            return {id,nombre,email,foto,credential}
     }
 }
 
