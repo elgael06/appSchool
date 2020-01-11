@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { IonBackButton, IonButtons, IonHeader, IonPage, IonToolbar, IonTitle, IonContent, IonItemGroup, IonItem, IonInput, IonButton, IonLabel } from '@ionic/react';
+import { IonBackButton, IonButtons, IonHeader, IonPage, IonToolbar, IonTitle, IonContent, IonItemGroup, IonItem, IonInput, IonButton, IonLabel, IonToast } from '@ionic/react';
 import { insert } from '../../manager/sql.services';
+import { Redirect } from 'react-router';
 
 const AddUser = () => {
   const [name,setName] = useState('');
@@ -9,6 +10,7 @@ const AddUser = () => {
   const [password,setPassword] = useState('');
   const [password2,setPassword2] = useState('');
   const [email,setEmail] = useState('');
+  const [statusUrl,setUrl] = useState(true);
 
 	const evSubmit = (e:any)=>{
 		e.preventDefault()
@@ -18,11 +20,13 @@ const AddUser = () => {
       apPat,
       apMat,
       password,
-      email
+	  email,
+	  redirect
 	);
-	window.location.href ='/';
 	}
-
+	const redirect =()=>{
+		setUrl(false);
+	}
 	return (
 		<IonPage>
 		<IonHeader>
@@ -94,9 +98,31 @@ const AddUser = () => {
 				</IonButton>
 			</form>
 		</IonContent>
+		{statusUrl || <Redirect to="/login" />}
+		<ToastAlert
+			cerrar={()=>{
+				setUrl(false);
+
+			}}
+			status={!statusUrl}
+		/>
 		</IonPage>
 	);
 };
+
+const ToastAlert =({status=false,cerrar=()=>{},mensajeToast='guargado...'})=>{
+
+	return(
+		<IonToast 
+			isOpen={status}
+			animated
+			position="top"
+			color={'success'}
+			onDidDismiss={cerrar}
+			message={mensajeToast}
+			duration={2500} 
+		/>);
+}
 
 
 export default AddUser;

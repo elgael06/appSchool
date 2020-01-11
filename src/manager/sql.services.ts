@@ -84,15 +84,19 @@ export const insert = ({
             tx.executeSql("INSERT INTO alumnos (name, lastName, appPat, appMat, idGrupo) VALUES (?,?,?,?,?)", [name,lastName,appPat,appMat,idGrupo]);
         });
     },
-    Profesor(name:string,appPat:string,appMat:string,clave:String,email:string){
+    Profesor(name:string,appPat:string,appMat:string,clave:String,email:string,callback?:()=>void){
         const today = new Date();
+        console.log('guardando...')
         db.transaction(function (tx:any) {
             //id, clave, usuario, password, nombre, apellidoPaterno, apellidoMaterno, email VARCHAR(45) NOT NULL,
             //mesesPrueba INT NOT NULL DEFAULT 1, terminoPrueba BIT NOT NULL DEFAULT 0, idTipoTurno INT NOT NULL DEFAULT 1,
             // idStatus INT NOT NULL DEFAULT 1, fechaCreacion DATETIME NOT NULL, fechaUltimaActualizacion DATETIME NOT NULL
             tx.executeSql("INSERT INTO profesores (nombre, apellidoPaterno, apellidoMaterno, password, email, fechaCreacion,fechaUltimaActualizacion,clave ) VALUES (?,?,?,?,?,?,?,1)",
-             [name,appPat,appMat,clave,email,today.getTime(),today.getTime()]);
-             console.log('guardado en bd...')
+             [name,appPat,appMat,clave,email,today.getTime(),today.getTime()],(res:any)=>{
+                 console.log(res);
+                 console.log('guardado en bd...');
+                 !callback||callback();
+             });
         });    
     },
     MateriasProfesor(idProfesor:Number,idMateria:Number){

@@ -88,6 +88,7 @@ const App = ({showLoading, usuario,onLoading}:iPropsApp) =>{
 					<Route exact={true} path="/asistencia/:id" component={Asistencia} />
 
 					<Route exact={true} path="/login" render={() => <Redirect to="/home" />} />
+					<Route exact={true} path="/" render={() => <Redirect to="/home" />} />
 					<Route exact={true} path="/login/Adduser" render={() => <Redirect to="/home" />} />
 
 					<Route path="/*" component={Error} />
@@ -100,7 +101,7 @@ const App = ({showLoading, usuario,onLoading}:iPropsApp) =>{
 				<Route exact path="/login/Adduser" component={AddUser} />
 
 				<Route exact path="/home" render={() => <Redirect to="/login" />} />
-				<Route exact path="/" render={() => <Redirect to="/login" />} />
+				<Route path="/*" render={() => <Redirect to="/login" />} />
 
 				<Route path="/*" component={Error} />
 		</IonRouterOutlet>)}

@@ -14,6 +14,7 @@ import {
 } from '@ionic/react';
 import {  close, save } from 'ionicons/icons';
 import { iModal } from './interfaces';
+import { insertMateria } from '../../../manager/firestone.services';
 
 
 const ModalAgregarMateria = (props:iModal) => {
@@ -27,8 +28,15 @@ const ModalAgregarMateria = (props:iModal) => {
     const evSubmit = (e:any) => {
         e.preventDefault();
         if(materia){
-            props.evSubmit(materia.toUpperCase());
+            insertMateria({
+                nombre:materia,
+                alta:new Date(),
+                modificacion:new Date(),
+                estatus:true,
+                id_profesor:'',
+            });
             setMateria('')
+            props.setOpenModal(false)
         }
     }
 

@@ -12,14 +12,15 @@ import { IonContent,
 		 IonButton, 
 		 IonAlert, 
 		 IonIcon,
-		 IonToast
+		 IonToast,
+		 IonFabButton
 	} from '@ionic/react';
 import { useState } from 'react';
 import { connect } from 'react-redux';
 import { addUsuario } from './actions';
 import {change_loading} from '../../actions';
 import { select } from '../../manager/sql.services';
-import { logIn, logoGoogle, contact } from 'ionicons/icons';
+import { logIn, logoGoogle, personAdd } from 'ionicons/icons';
 
 import * as firebase from "firebase/app";
 
@@ -37,7 +38,7 @@ const Login = ({evAddUsuario,setShowLoading}:iPropsApps) => {
 	const [password,setPasword] 	= useState('');
 	const [msgError,setMsgError]	= useState(false);
 	const [showToast,setShowToast]	= useState(false);
-	const [mensajeToast,setMensaje]	= useState('');
+	const [mensajeToast,setMensaje]	= useState(''); 
 	const [colorState, setColor]	= useState('primary');
 
 	const eVsubmit = (e:any)=>{
@@ -67,15 +68,13 @@ const Login = ({evAddUsuario,setShowLoading}:iPropsApps) => {
 	const evSesion = (respuesta:any):void =>{
 		console.log("Sesion=>",respuesta)
 		if(respuesta==null){
-			//setShowLoading(false);
-			//setMsgError(true);
 			onError('Error al iniciar sesion !!!');
 		}
 		else{
 			setMensaje(`Bien venido ${respuesta.nombre}...`);
 			setColor('success');
 			setShowToast(true);
-			setTimeout(()=>evAddUsuario(respuesta),2500);
+			evAddUsuario(respuesta);
 			}
 	}
 	const onError = (err:string)=>{
@@ -91,7 +90,7 @@ const Login = ({evAddUsuario,setShowLoading}:iPropsApps) => {
 		<ContentApp>
 			<form onSubmit={eVsubmit}>
 				<IonItem>
-					<IonLabel position="floating">Id Usuario</IonLabel>
+					<IonLabel position="floating">Correo</IonLabel>
 						<IonInput 
 							type="number" 
 							onIonChange={(e:any)=>setUsuario(e.target.value)} 
@@ -99,12 +98,12 @@ const Login = ({evAddUsuario,setShowLoading}:iPropsApps) => {
 						/>
 				</IonItem>
 				<IonItem>
-				<IonLabel position="floating">Contraseña</IonLabel>
-				<IonInput 
-					type="password" 
-					value={password} 
-					onIonChange={(e:any)=>setPasword(e.target.value)} 
-				/>
+					<IonLabel position="floating">Contraseña</IonLabel>
+					<IonInput 
+						type="password" 
+						value={password} 
+						onIonChange={(e:any)=>setPasword(e.target.value)} 
+					/>
 				</IonItem>
 				<hr/>
 				<IonButton 
@@ -122,23 +121,20 @@ const Login = ({evAddUsuario,setShowLoading}:iPropsApps) => {
 			message='el usuario y/o la contraseña son incorrectos.'
 			buttons={['Aceptar']}
 		/>
-		<IonButton 
-			expand="block"
+		<div style={{display:'flex',justifyContent:'center',paddingLeft:'50px',paddingRight:'50px'}}>
+		<IonFabButton
+			style={{margin:'auto'}} 
 			color="secondary"
-			fill="solid"
 			routerLink="/Login/Adduser">
-				<IonIcon icon={contact} style={{padding:'10px'}} />
-				Crear Usuario
-		</IonButton>
-		<br />
-		<IonButton 
-			expand="block"
+				<IonIcon icon={personAdd} style={{padding:'10px'}} />
+		</IonFabButton>
+		<IonFabButton 
+			style={{margin:'auto'}}
 			color="light"
-			fill="solid"
 			onClick={consultarCorreoGoogle}>
 				<IonIcon icon={logoGoogle} style={{padding:'10px'}} />
-				Inciar sesion con googel 
-		</IonButton>
+		</IonFabButton>
+		</div>
 		<br />
 		<IonToast 
 			isOpen={showToast}
@@ -155,7 +151,7 @@ const Login = ({evAddUsuario,setShowLoading}:iPropsApps) => {
 const ContentApp = ({children}:any) =>(<Fragment>
 	<IonHeader>
 	<IonToolbar color="primary">
-		<IonTitle >Iniciar Secion ScholApp</IonTitle>
+		<IonTitle >Iniciar Sesión SchollApp</IonTitle>
 	</IonToolbar>
 </IonHeader>
 <IonContent>

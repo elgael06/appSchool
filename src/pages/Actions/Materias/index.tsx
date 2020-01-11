@@ -24,11 +24,13 @@ import { add, bookmarks } from 'ionicons/icons';
 import { useState } from 'react';
 import { insert, select, deleteFrom } from '../../../manager/sql.services';
 import ModalAgregarMateria from './ModalAgregarMateria';
+import { selectAllMateriasIdProfesor } from '../../../manager/firestone.services';
+import { connect } from 'react-redux';
 
 
 const ite:Object[]=[];
 
-const Materias : FC = () =>{
+const Materias : FC = ({id_usuario}:any) =>{
 	const [openModal,setOpenModal] = useState(false);
 	const [showToast,setShowToast] = useState(false);
 	const [mensajeToast,setMensaje] = useState('');
@@ -42,6 +44,8 @@ const Materias : FC = () =>{
 		select.all.materias(1,function(items:any[]){
 			setMaterias(items)
 		});
+		const mat = selectAllMateriasIdProfesor(id_usuario);
+		console.log(mat);
 	},[]);
 
     const insertMateriaMaestro = (idMateria:number)=>{
@@ -94,12 +98,8 @@ const Materias : FC = () =>{
 			</IonItem>
 			
 			<IonItemGroup style={{marginTop:70}}>
-			{
-				/**
-				 * Lista de materias
-				 */
-				materias.length===0 ? <span>Aun no cuenta con materias asignadas...</span> : 
-					materias.filter((e:any)=>e.name.toUpperCase().search(filtro)>-1)
+			{materias.length===0 ? <span>Aun no cuenta con materias asignadas...</span> : 
+				materias.filter((e:any)=>e.name.toUpperCase().search(filtro)>-1)
 					.map((e:any)=><IonCard className="welcome-card" key={e.idMateria} onClick={()=>evOpcionMateria(e.idMateria)}>
 					<IonCardHeader>
 						<IonCardTitle><IonIcon icon={bookmarks} style={{float:'right'}}/> {e.name}</IonCardTitle>
@@ -139,7 +139,7 @@ const Materias : FC = () =>{
 						text: 'No',
 						role: 'cancel',
 						cssClass: 'secondary',
-						handler: () => {
+						handler: () => {	
 							console.log('Confirm Cancel: blah');
 							setMateria(0);
 						}
@@ -199,4 +199,8 @@ const Materias : FC = () =>{
 
 
 
-export default Materias;
+//export default Materias;
+const propsDispathState = (state:any)=>({
+	id_usuario:state.Usuario.id
+});
+export default connect(propsDispathState,null)(Materias);

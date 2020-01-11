@@ -38,12 +38,19 @@ const mapStateToProps = (state:any) =>({
 });
 
 const mapDispatchToProps = (dispatch:any) =>({
-  async onCloseSesion(){
-        await firebase.auth().signOut();
-        dispatch(removeUsuario());
+    onCloseSesion(){
+        firebase.auth().signOut().then(()=>{            
+            console.log('cerrar sesion');
+            dispatch(removeUsuario());  
+        }).catch(err=>{
+            console.log(err);
+        });
   }
 });
 
 export default connect(
     mapStateToProps,
   mapDispatchToProps)(AppTaps);
+
+
+  
